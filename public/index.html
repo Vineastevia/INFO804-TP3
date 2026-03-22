@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shader - Gallery</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Loading screen -->
+  <div id="loading">
+    <div id="loading-text">Initializing Gallery</div>
+    <div id="loading-bar"><div id="loading-progress"></div></div>
+  </div>
+
+  <!-- Three.js canvas -->
+  <div id="canvas-container"></div>
+
+  <!-- HUD -->
+  <div id="hud">
+    <div id="museum-title">Shader<span> ◆ </span>Gallery</div>
+    <div id="nav-hint">
+      Click on a frame to enter<br>
+      ESC to exit
+    </div>
+  </div>
+
+  <div id="interaction-hint">Cliquez sur les tableaux pour interagir avec</div>
+
+  <div id="artwork-overlay">
+    <div id="artwork-frame">
+      <!-- Canvas injected by JS -->
+    </div>
+    <div id="artwork-info">
+      <div>
+        <div id="artwork-title-display"></div>
+        <div id="artwork-subtitle"></div>
+      </div>
+      <button id="close-btn">ESC · FERMER</button>
+    </div>
+    <div id="shader-controls" class="hidden">
+      <div class="ctrl-row">
+        <label>Title</label>
+        <input type="range" id="ctrl-speed" min="0.05" max="1.5" step="0.05" value="0.3">
+        <span id="val-speed">0.3</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Title</label>
+        <input type="range" id="ctrl-mouse" min="0" max="8" step="0.1" value="3.5">
+        <span id="val-mouse">3.5</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Title</label>
+        <input type="range" id="ctrl-scale" min="1" max="12" step="0.5" value="4">
+        <span id="val-scale">4.0</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Title</label>
+        <input type="range" id="ctrl-marble" min="0" max="1" step="0.01" value="0.35">
+        <span id="val-marble">0.35</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Artwork renderers -->
+  <script src="/js/artwork1.js"></script>
+  <script src="/js/artwork2.js"></script>
+  <script src="/js/artwork3.js"></script>
+  <script src="/js/artwork4.js"></script>
+
+  <!-- Main scene -->
+  <script type="module" src="/js/gallery.js"></script>
+
+</body>
+</html>
