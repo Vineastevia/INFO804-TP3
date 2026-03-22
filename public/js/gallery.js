@@ -340,11 +340,45 @@ class ShadersGallery {
   }
 
   _bindEvents() {
+    const audio   = document.getElementById('ambiance');
+    const muteBtn = document.getElementById('mute-btn');
+    const muteIcon = document.getElementById('mute-icon');
+
     window.addEventListener('resize',    this._onResize.bind(this));
     window.addEventListener('mousemove', this._onMouseMove.bind(this));
     window.addEventListener('click',     this._onClick.bind(this));
     window.addEventListener('keydown', e => { if (e.key === 'Escape') this._closeOverlay(); });
     document.getElementById('close-btn').addEventListener('click', () => this._closeOverlay());
+
+    audio.volume = 0;
+    let audioStarted = false;
+
+    muteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      if (!audioStarted) {
+        audio.play()
+            .then(() => {
+              audioStarted = true;
+              audio.volume = 1;
+              muteIcon.style.opacity = '1';
+            })
+            .catch(err => console.warn('Audio play failed:', err));
+        return;
+      }
+
+      if (audio.paused) {
+        audio.play();
+        audio.volume = 1;
+        muteIcon.style.opacity = '1';
+      } else if (audio.volume > 0) {
+        audio.volume = 0;
+        muteIcon.style.opacity = '0.3';
+      } else {
+        audio.volume = 1;
+        muteIcon.style.opacity = '1';
+      }
+    });
   }
 
   _onResize() {

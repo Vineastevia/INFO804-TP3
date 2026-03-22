@@ -21,11 +21,15 @@
   <!-- Three.js canvas -->
   <div id="canvas-container"></div>
 
+  <audio id="ambiance" src="/audio/djovan-infinite-energy-within-497084.mp3" loop preload="auto"></audio>
   <!-- HUD -->
   <div id="hud">
     <div id="museum-title">Shader<span> ◆ </span>Gallery</div>
+    <button id="mute-btn" title="Activer le son">
+      <img id="mute-icon" src="/img/sound.png" alt="son" />
+    </button>
     <div id="nav-hint">
-      Click on a frame to enter<br>
+      Click on a frame to open<br>
       ESC to exit
     </div>
   </div>

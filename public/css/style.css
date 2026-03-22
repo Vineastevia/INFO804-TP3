@@ -330,3 +330,18 @@ body::after {
 .ctrl-row label { width: 58px; text-transform: uppercase; }
 .ctrl-row input[type=range] { width: 110px; accent-color: var(--accent); cursor: none; }
 .ctrl-row span { width: 30px; color: var(--accent); font-size: 9px; }
+
+#mute-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  pointer-events: all;
+}
+
+#mute-icon {
+  width: 28px;
+  height: 28px;
+  opacity: 0.3;
+  transition: opacity 0.2s;
+}
