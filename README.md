@@ -67,3 +67,7 @@ Ces deux paramètres ont été réduits (48 steps, 5 itérations) pour maintenir
 ### Gestion des performances - previews
 
 Afficher quatre shaders animés simultanément en arrière-plan de la scène Three.js représentait une charge trop importante avec beaucoup de ralentissement/latence. La solution que j'ai utilisée : chaque shader est instancié une seule fois sur un canvas offscreen, cinq frames sont rendues pour éviter un canva vide/noir, le canvas est capturé en `THREE.CanvasTexture` et appliqué sur le mesh du cadre, puis l'instance WebGL est immédiatement libérée.
+
+### Musique d'ambiance
+
+La musique utilisée est libre de droit trouvée sur [Pixabay.com](https://pixabay.com/).
