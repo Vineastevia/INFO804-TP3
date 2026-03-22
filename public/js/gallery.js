@@ -1,5 +1,6 @@
 // SHADER GALLERY - Main Three.js Scene
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import { MODES } from './controlsConfig.js';
 
 const ARTWORKS = [
   {
@@ -451,58 +452,43 @@ class ShadersGallery {
     overlay.classList.add('visible');
 
     const controls = document.getElementById('shader-controls');
-    const labels   = document.querySelectorAll('.ctrl-row label');
     const inst     = this.artworkInstances[id];
 
-    const bind = (ctrlId, valId, param, digits = 1) => {
-      const input = document.getElementById(ctrlId);
-      const span  = document.getElementById(valId);
-      const fresh = input.cloneNode(true);
-      input.parentNode.replaceChild(fresh, input);
-      fresh.addEventListener('input', e => {
-        inst.params[param] = parseFloat(e.target.value);
-        span.textContent   = parseFloat(e.target.value).toFixed(digits);
-      });
-    };
+    const config = MODES[id];
 
-    const setSlider = (ctrlId, valId, min, max, step, value, digits = 1) => {
-      const el = document.getElementById(ctrlId);
-      el.min = min; el.max = max; el.step = step; el.value = value;
-      document.getElementById(valId).textContent = parseFloat(value).toFixed(digits);
-    };
-
-    if (id === 1) {
-      controls.classList.remove('hidden');
-      labels[0].textContent = 'Animation';
-      labels[1].textContent = 'Déformation';
-      labels[2].textContent = 'Fréquence';
-      labels[3].textContent = 'Turbulence';
-      setSlider('ctrl-speed',  'val-speed',  0.05, 1.5, 0.05, inst.params.speed,      2);
-      setSlider('ctrl-mouse',  'val-mouse',  0,    8,   0.1,  inst.params.mouseForce, 1);
-      setSlider('ctrl-scale',  'val-scale',  1,    12,  0.5,  inst.params.waveScale,  1);
-      setSlider('ctrl-marble', 'val-marble', 0,    1,   0.01, inst.params.marbleAmp,  2);
-      bind('ctrl-speed',  'val-speed',  'speed',      2);
-      bind('ctrl-mouse',  'val-mouse',  'mouseForce', 1);
-      bind('ctrl-scale',  'val-scale',  'waveScale',  1);
-      bind('ctrl-marble', 'val-marble', 'marbleAmp',  2);
-
-    } else if (id === 3) {
-      controls.classList.remove('hidden');
-      labels[0].textContent = 'Animation';
-      labels[1].textContent = 'Luminosité';
-      labels[2].textContent = 'Segments';
-      labels[3].textContent = 'Zoom';
-      setSlider('ctrl-speed',  'val-speed',  0.05, 1.5, 0.05, inst.params.speed,      2);
-      setSlider('ctrl-mouse',  'val-mouse',  0.1,  3,   0.05, inst.params.brightness, 2);
-      setSlider('ctrl-scale',  'val-scale',  2,    16,  1,    inst.params.segments,   0);
-      setSlider('ctrl-marble', 'val-marble', 0.3,  3,   0.05, inst.params.zoom,       2);
-      bind('ctrl-speed',  'val-speed',  'speed',      2);
-      bind('ctrl-mouse',  'val-mouse',  'brightness', 2);
-      bind('ctrl-scale',  'val-scale',  'segments',   0);
-      bind('ctrl-marble', 'val-marble', 'zoom',       2);
-
-    } else {
+    if (!config || !inst) {
       controls.classList.add('hidden');
+    } else {
+      controls.classList.remove('hidden');
+
+      const rows = controls.querySelectorAll('.ctrl-row');
+
+      rows.forEach((row, i) => {
+        const cfg = config[i];
+        if (!cfg) return;
+
+        const label = row.querySelector('label');
+        const input = row.querySelector('input');
+        const value = row.querySelector('span');
+
+        label.textContent = cfg.label;
+
+        input.min = cfg.min;
+        input.max = cfg.max;
+        input.step = cfg.step;
+        input.value = inst.params[cfg.key];
+
+        value.textContent = inst.params[cfg.key].toFixed(cfg.decimals);
+
+        const fresh = input.cloneNode(true);
+        input.parentNode.replaceChild(fresh, input);
+
+        fresh.oninput = (e) => {
+          const val = parseFloat(e.target.value);
+          inst.params[cfg.key] = val;
+          value.textContent = val.toFixed(cfg.decimals);
+        };
+      });
     }
 
     const renderArtwork = () => {
